@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+    <script>
+        
+        let answer = getRndInteger(1, 64);
+
+        let guesses = [];
+
+        let guessCounter = 10;
+
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) ) + min;
+        }
+
+        function checkGuess() {
+            guess = document.getElementById("guess").value;
+
+            if(guessCounter == 1){
+                document.body.innerHTML = "<h1>YOU FAILED</h1> <h2>The answer was: "+ answer + "</h2> <img src='/scruffles.jpg' style='width: 400px;'/>";
+            } else{
+                guessCounter -= 1;
+
+                if(guess == answer){
+                    document.getElementById("message").style = "color: green";
+                    document.getElementById("message").innerHTML = "Correct! " + guess + " is the right answer!";
+                    document.getElementById("scruffles-yes").style = "display: block; width: 400px";
+                } else if(guess > answer){
+                    guesses.push("Too High " + guess);
+                    document.getElementById("message").style = "color: red";
+                    document.getElementById("message").innerHTML = "Too High";
+                    
+                } else if(guess < answer){
+                    guesses.push("Too Low " + guess);
+                    document.getElementById("message").style = "color: blue";
+                    document.getElementById("message").innerHTML = "Too Low";
+
+                }
+            }
+                
+            document.getElementById("guess-left").innerHTML = guessCounter;
+            document.getElementById("history").innerHTML = guesses;
+        }
+    </script>
+</head>
+<body>
+    <h1>Guess a Number!</h1>
+    <div>Guesses Left <span id="guess-left">10</span></div>
+    <div id="history" style="width: 400px;"></div>
+    
+    <span id="message"></span>
+    <div>
+        Enter a number between 1 and 64 I pity the fool who enters a number between 1 and 64: <input id="guess" type="text"/> <button onclick="checkGuess()">Guess Now</button>
+    </div>
+    <img id="scruffles-yes" src="/millie.jpg" style="display: none;">
+</body>
+</html>
